@@ -1,0 +1,23 @@
+﻿body {
+}
+
+#admin_left_content{    
+    position:inherit;
+    width: 80%;
+    height: 100%;
+    margin-left: 10%;
+    
+}
+
+#admin_right_content{
+    position:inherit;
+    width: 97%;
+    height: 100%;
+    margin-right: 5%;
+    margin-top: 3%;
+   
+}
+
+#customActive {
+    background-color:#170c58;
+}
