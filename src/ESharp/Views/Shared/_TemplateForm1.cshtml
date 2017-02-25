@@ -1,0 +1,63 @@
+﻿<table>
+    <tr>
+        <td width="70%">
+            <div>
+
+                <div class="col-sm-12">
+                    <div class="panel panel-info">
+
+                        <div class="panel-body">
+
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group has-feedback">
+                                        <label for="name" class="control-label">Введите название статьи:</label>
+                                        <input type="text" id="name" name="name" class="form-control" required="required" value="" placeholder="Например, Делегаты и События" minlength="2" maxlength="30">
+                                        <span class="glyphicon form-control-feedback"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group has-feedback">
+                                <label for="message" class="control-label">Введите сообщение:</label>
+                                <textarea id="message" class="form-control" rows="6 " required="required"></textarea>
+                            </div>
+
+                            <div class="form-group has-feedback">
+                                <label for="message" class="control-label">Выберите картинку:</label>
+                                <input type="file" id="name" name="name" class="form-control" required="required" value="">
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary" id="back-chooseTemplate">Назад</button>
+                            <button type="submit" class="btn btn-primary pull-right" id="next-chooseTemplate">Далее</button>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </td>
+        <td width="30%">
+            <button class="templateimg">Template 2</button>
+        </td>
+    </tr>
+</table>
+
+<script>
+    $('#back-chooseTemplate').click(function () {
+
+        $('#dialogChoose').dialog('close');
+        $('#dialog').dialog('open');
+    });
+
+    $('#next-chooseTemplate').click(function () {
+        $('#dialogChoose').dialog('close');
+        $('#dialogPreview').dialog('open');
+    });
+</script>

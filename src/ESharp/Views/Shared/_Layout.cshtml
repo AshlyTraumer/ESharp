@@ -5,14 +5,15 @@
 
     <environment names="Development">
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="@Url.Content("js/accordeon.js")"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        
+        <meta name="viewport" content="width=device-width, initial-scale=1">        
+        <script src="@Url.Content("js/accordeon.js")"></script>    
         <link rel="stylesheet" href="@Url.Content("css/index.css")" />
-        <link rel="stylesheet" href="@Url.Content("css/admin.css")" />
+        <link rel="stylesheet" href="@Url.Content("css/admin.css")" />        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">        
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     </environment>
 </head>
 <body>
@@ -24,14 +25,144 @@
                     </h2>
                 </div>
                 <div id="subheader">
-                    <h2 ><a href="#" style="font-size: 16px; color: white">Добавить статью</a></h2>
-                </div>
-       
-       
-                @RenderBody()
-          
-    
+                    <h2 ><a href="#" style="font-size: 16px; color: white" id="newArticle">Добавить статью</a></h2>
 
+                </div>
+
+    
+    <div id="dialog" hidden title="Добавление статьи">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <button class="template" id="choose1">Template 1</button>                       
+                    </td>
+                    <td>
+                        <button class="template">Template 2</button>                       
+                    </td>
+                    <td>
+                        <button class="template">Template 3</button>                       
+                    </td> 
+                    </tr>
+                <tr style="height:10px;"><td></td><td></td><td></td></tr>
+                <tr>               
+                    <td>
+                        <button class="template">Template 4</button>                      
+                    </td>
+                    <td>
+                        <button class="template">Template 5</button>                      
+                    </td>
+                    <td>
+                        <button class="template">Template 6</button>                        
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    <div id="dialogChoose" hidden title="Добавление статьи">    
+    </div>
+
+    <div id="dialogPreview" hidden title="Добавление статьи">
+    </div>
+
+
+        @RenderBody()
+
+
+        <script>
+            $(window).ready(function () {
+                $('#dialog').dialog({
+                    autoOpen: false,
+                    width: 1000,
+                    height: 600,
+                    show: {
+                        effect: "blind",
+                        duration: 1000
+                    },
+                    hide: {
+                        effect: "explode",
+                        duration: 1000
+                    }
+                });
+
+                $('#dialogChoose').dialog({
+                    autoOpen: false,
+                    width: 1100,
+                    height: 450,
+                    show: {
+                        effect: "blind",
+                        duration: 1000
+                    },
+                    hide: {
+                        effect: "explode",
+                        duration: 1000
+                    }
+                });
+            });
+
+            $('#dialogPreview').dialog({
+                autoOpen: false,
+                width: 1100,
+                height: 450,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
+
+            $('#dialogOk').dialog({
+                autoOpen: false,
+                width: 1100,
+                height: 450,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
+
+
+
+            $('#newArticle').click(function () {
+                $('#dialog').dialog('open');
+            });
+
+            $('#choose1').click(function () {
+                $('#dialog').dialog('close');
+                $('#dialogChoose').dialog('open');
+                
+                $.ajax({                  
+                    type: "Get",                    
+                    url: '@Url.Action("GetFormPartial","Admin")', 
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'html',
+                    success: function (data) {                     
+                        $('#dialogChoose').html(data);
+                    },                    
+                });
+
+                $(document).ajaxStart(function () {
+                    $('#dialogChoose').html("Загрузка");
+                });
+                
+               
+            });
+
+           
+
+
+           
+
+
+        </script>
 
 
 </body>

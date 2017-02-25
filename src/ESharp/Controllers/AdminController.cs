@@ -15,5 +15,11 @@ namespace ESharp.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult GetFormPartial()
+        {
+            return PartialView("_TemplateForm1");
+        }
     }
 }
