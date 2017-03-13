@@ -18,6 +18,18 @@
     z-index: -1;
 }
 
+#menu {
+    margin-left: 20%;
+    margin-top: 2%;
+    font-size: 16px;
+    color: white;
+}
+
+#menu a{
+        font-size: 16px;
+        color: white;
+    }
+
 table{
     width:100%;
     height:78%;
@@ -37,7 +49,7 @@ table{
 
 }
 
-right_content{
+#right_content{
     position:inherit;
     width: 100%;
     

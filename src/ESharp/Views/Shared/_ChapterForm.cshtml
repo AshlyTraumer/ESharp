@@ -1,0 +1,65 @@
+﻿
+<form method="post" enctype="multipart/form-data">
+    <div>
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+
+                <div class="panel-body">
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group has-feedback">
+                                <label class="control-label">Введите название статьи:</label>
+                                <input type="text" id="chapter0" name="Chapter" class="form-control" required="required" placeholder="Например, Делегаты и События" minlength="2" maxlength="30">
+                                <span class="glyphicon form-control-feedback"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                   
+
+
+                    <button type="submit" class="btn btn-primary pull-right" id="add">Далее</button>
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</form>
+
+
+<script>
+    $('#add').click(function () {
+        var data = new FormData();
+
+        var postData = $('#chapter0');
+        $.each(postData, function (key, input) {
+            data.append(input.name, input.value);
+        });
+      
+        
+            
+       
+
+        
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("AddChapter", "Admin")',
+            contentType: false,
+            processData: false,
+            dataType: 'html',
+            data: data,
+            
+            error: function () {
+                alert("Раздел успешно добавлен");
+            }
+        });
+    });
+</script>
