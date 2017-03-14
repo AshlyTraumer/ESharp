@@ -120,8 +120,10 @@
     });
 
     function ChangeArticleView(chapter, article) {
+        var isA = confirm("Внимание. При изменении статьи старые картинки не сохраняются. Вы желаете продолжить?");
+        if (isA == false) return;
 
-        $("#dialogChangeArticle").dialog('open');
+        $("#dialogPreview").dialog('open');
 
         $.ajax({
             type: "GET",
@@ -130,7 +132,7 @@
             processData: false,
            
             success: function (data) {
-                $('#dialogChangeArticle').html(data);
+                $('#dialogPreview').html(data);
             }
         });
     }

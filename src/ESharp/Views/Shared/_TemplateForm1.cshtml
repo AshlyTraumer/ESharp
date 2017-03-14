@@ -2,7 +2,7 @@
 <table>
     <tr>
         <td width="60%">
-            <form method="post" >
+            <form method="post">
                 <div>
                     <div class="col-sm-12">
                         <div class="panel panel-info">
@@ -12,7 +12,7 @@
                                     <label class="control-label">Введите название статьи:</label>
                                     <input type="text" id="title" name="Title" class="form-control" value="@Model.Title" placeholder="Например, Делегаты и События" minlength="2" maxlength="30">
                                 </div>
-                                
+
 
                                 <div class="form-inline">
                                     <label class="control-label">Выберите раздел:</label>
@@ -34,7 +34,7 @@
                                 </div>
 
                                 <hr>
-                               
+
                                 <div class="form-group has-feedback">
                                     <label class="control-label">Введите сообщение:</label>
                                     <textarea id="description" class="form-control" rows="6 " name="Description">@Model.Description</textarea>
@@ -42,10 +42,10 @@
 
                                 <div class="form-inline">
                                     <label class="control-label">Выберите картинку:</label>
-                                    <input type="file" id="file" name="ImgUrl0" class="form-control"  value=""  style="width: 72%; margin-left: 2%">
+                                    <input type="file" id="file" name="ImgUrl0" class="form-control" value="" style="width: 72%; margin-left: 2%">
                                 </div>
-                                
-                                <hr/>
+
+                                <hr />
                                 <p>@Html.ValidationSummary()</p>
 
                                 <button type="button" class="btn btn-primary" id="back-chooseTemplate">Назад</button>
@@ -68,11 +68,13 @@
 
 <script>
     var data = new FormData();
-    $(window).ready(function() {
+    $(window).ready(function () {
         
         data.append("OldArticle", "@Model.Title");
         data.append("OldChapter", "@Model.Chapter");
     });
+
+
 
     $('#back-chooseTemplate').click(function () {
 
@@ -89,8 +91,11 @@
         });
 
         var fileUpload = $("#file").get(0);
+
         var files = fileUpload.files;
-        //  var data = new FormData();
+        alert($('#file').val());
+        
+          var data = new FormData();
         for (var i = 0; i < files.length ; i++) {
             data.append(files[i].name, files[i]);
         }
@@ -104,9 +109,11 @@
         $.each(postData, function (key, input) {
             data.append(input.name, input.value);
         });
-     
+
+
+        alert("Ok" + $("#chapter :selected").text());
         data.append("Chapter", $("#chapter :selected").text());
-    
+
         $.ajax({
             type: "POST",
             url: '@Url.Action("GetTemplatePartial", "Admin")',

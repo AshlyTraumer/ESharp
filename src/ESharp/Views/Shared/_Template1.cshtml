@@ -1,4 +1,5 @@
-﻿@model ESharp.Models.Template01ViewModel
+﻿@using System.Net
+@model ESharp.Models.Template01ViewModel
 
 @{
     ViewBag.Title = Model.Title + "(Preview)";  
@@ -41,7 +42,7 @@
     });
 
     $('#next-choosePreview').click(function () {
-        
+
         $.ajax({
             type: "Get",
             url: '@Url.Action("AcceptForm","Admin")',
@@ -53,6 +54,7 @@
         $('#dialog').dialog('close');
         $('#dialogChangeArticle').dialog('close');
         alert("Статья добавлена успешно");
+        window.location.href = "@Url.Action("Index", "Admin")";
     });
 
 

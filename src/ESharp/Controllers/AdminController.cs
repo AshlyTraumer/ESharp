@@ -109,9 +109,9 @@ namespace ESharp.Controllers
                 wrapper.WriteNewModelToStorage(data, path, oldChapter, oldArticle);
             }
 
-            
 
-            return Content("Ok");
+
+            return Redirect(Url.Action("Index","Admin", new {pages = 0}));
         }
 
         [HttpPost]
