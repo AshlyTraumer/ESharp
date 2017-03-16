@@ -78,17 +78,18 @@
 
     $('#back-chooseTemplate').click(function () {
 
-        $('#dialogChoose').dialog('close');
-        $('#dialog').dialog('open');
+            $('#dialog').dialog('open');
+            $('#dialogChoose').dialog('close');
+            $("#dialogChangeArticle").dialog('close');
+            $('#dialogPreview').dialog('close');
     });
 
     $('#next-chooseTemplate2').click(function () {
-        $('#dialogChoose').dialog('close');
-        $('#dialogPreview').dialog('open');
+        $('#dialogChoose').dialog('open');
+       // $('#dialogPreview').dialog('close');
+       
 
-        $(document).ajaxStart(function () {
-            $('#dialogPreview').html("Загрузка");
-        });
+       
 
         var fileUpload = $("#file").get(0);
 
@@ -121,7 +122,7 @@
             processData: false,
             data: data,
             success: function (data) {
-                $('#dialogPreview').html(data);
+               $('#dialogChoose').html(data);
             },
             error: function () {
                 alert("There was error uploading files!");

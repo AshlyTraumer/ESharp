@@ -64,8 +64,9 @@
     <div id="dialogChoose" hidden title="Добавление статьи">
     </div>
 
-    <div id="dialogPreview" hidden title="Добавление статьи">
-    </div>
+<div id="dialogPreview" hidden title="Добавление статьи">
+    Загрузка ...
+</div>
 
 
     
@@ -94,8 +95,8 @@
 
             $('#dialogChoose').dialog({
                 autoOpen: false,
-                width: 1200,
-                height: 550,
+                width: $(window).width() * 0.70,
+                height: 600,
                 show: {
                     effect: "blind",
                     duration: 1000

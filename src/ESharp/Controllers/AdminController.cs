@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using ESharp.interfaces;
@@ -16,16 +17,20 @@ namespace ESharp.Controllers
             var wrapper = new StorageManager();
             
             var chapterList = wrapper.GetChapterList();
-            var articlesList = wrapper.GetArticlesTitlesByChapter(chapterList[page]);
-
-            var view = new AdminView
+            if (chapterList.Count != 0)
             {
-                Chapters = chapterList,
-                CurrentPage = page,
-                Articles = articlesList
-            };
+                var articlesList = wrapper.GetArticlesTitlesByChapter(chapterList[page]);
 
-           return View(view);
+                var view = new AdminView
+                {
+                    Chapters = chapterList,
+                    CurrentPage = page,
+                    Articles = articlesList
+                };
+
+                return View(view);
+            }
+            return View(new AdminView {Articles = new List<string>(), Chapters = new List<string>()});
         }
 
         [HttpGet]
@@ -34,7 +39,7 @@ namespace ESharp.Controllers
             var wrapper = new StorageManager();
             ViewBag.Chapters = wrapper.GetChapterList();
 
-            return PartialView("_TemplateForm1");
+            return PartialView("../Shared/Template1/_TemplateForm1", new Template01ViewModel());
         }
 
     
@@ -78,16 +83,16 @@ namespace ESharp.Controllers
                 var wrapper = new StorageManager();
                 ViewBag.Chapters = wrapper.GetChapterList();
 
-                return PartialView("_TemplateForm1",new Template01ViewModel());
+                return PartialView("../Shared/Template1/_TemplateForm1", new Template01ViewModel());
             }
 
-            return PartialView("_Template1", viewModel);
+            return PartialView("../Shared/Template1/_Template1", viewModel);
         }
 
         [HttpGet]
         public ActionResult GetChapterPartial()
         {
-            return PartialView("_ChapterForm");
+            return PartialView("../Shared/Chapter/_ChapterForm");
         }
 
         [HttpGet]
@@ -146,7 +151,7 @@ namespace ESharp.Controllers
             var wrapper = new StorageManager();
             var model = wrapper.GetArticle(chapter, article);
             ViewBag.Chapters = wrapper.GetChapterList();
-            return PartialView("_TemplateForm1", model);
+            return PartialView("../Shared/Template1/_TemplateForm1", model);
         }
 
         public IActionResult DeleteChapter(int article = 0, int chapter = 0)

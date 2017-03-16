@@ -10,7 +10,9 @@ namespace ESharp.Models
         public Template01Model(IFormCollection form) : base(form)
         {
        
-            Description = form["Description"];
+            Description = ((string) form["Description"]);
+            
+            Description = ((string) form["Description"]).Replace("\r\n","<br>");
             ImgUrl0 = form.Files[0];
             
         }
