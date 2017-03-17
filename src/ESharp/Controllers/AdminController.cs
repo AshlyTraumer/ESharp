@@ -82,8 +82,8 @@ namespace ESharp.Controllers
                 ModelState.AddModelError("Valid", "Ошибка валидации. Не все поля заполнены");
                 var wrapper = new StorageManager();
                 ViewBag.Chapters = wrapper.GetChapterList();
-
-                return PartialView("../Shared/Template1/_TemplateForm1", new Template01ViewModel());
+               
+                return PartialView("../Shared/Template1/_TemplateForm1", viewModel.GetPartialModel(Request.Form));
             }
 
             return PartialView("../Shared/Template1/_Template1", viewModel);
@@ -138,6 +138,25 @@ namespace ESharp.Controllers
             return RedirectToAction("Index","Admin", new {page = 0});
         }
 
+        [HttpPost]
+        public ActionResult ChangeChapter()
+        {
+            ChapterModel model;
+            if (Request.Form.IsValid(typeof(ChapterModel)))
+            {
+                model = new ChapterModel(Request.Form);
+            }
+            else
+            {
+                throw new ArgumentNullException("Форма не валидна");
+            }
+
+            var wrapper = new StorageManager();
+            wrapper.WriteChapterNewToStorage(model);
+
+            return RedirectToAction("Index", "Admin", new { page = 0 });
+        }
+
         public IActionResult DeleteArticle(int article = 0, int chapter = 0)
         {
             var wrapper = new StorageManager();
@@ -153,6 +172,8 @@ namespace ESharp.Controllers
             ViewBag.Chapters = wrapper.GetChapterList();
             return PartialView("../Shared/Template1/_TemplateForm1", model);
         }
+
+        
 
         public IActionResult DeleteChapter(int article = 0, int chapter = 0)
         {

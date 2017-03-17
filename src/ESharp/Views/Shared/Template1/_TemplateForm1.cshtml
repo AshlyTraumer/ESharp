@@ -85,7 +85,7 @@
     });
 
     $('#next-chooseTemplate2').click(function () {
-        $('#dialogChoose').dialog('open');
+      //  $('#dialogChoose').dialog('open');
        // $('#dialogPreview').dialog('close');
        
 
@@ -96,7 +96,7 @@
         var files = fileUpload.files;
         alert($('#file').val());
         
-          var data = new FormData();
+          
         for (var i = 0; i < files.length ; i++) {
             data.append(files[i].name, files[i]);
         }
@@ -122,7 +122,16 @@
             processData: false,
             data: data,
             success: function (data) {
+                alert(data.indexOf("<form method="));
+                if (data.indexOf("<form method=") != -1)
+                {
+                    $('#dialogPreview').html(data);
+                }
+            else
+            {
+                  $('#dialogChoose').dialog('open');
                $('#dialogChoose').html(data);
+}
             },
             error: function () {
                 alert("There was error uploading files!");

@@ -1,4 +1,4 @@
-﻿
+﻿@model ESharp.Models.ChapterModel
 <form method="post" enctype="multipart/form-data">
     <div>
         <div class="col-sm-12">
@@ -11,11 +11,10 @@
                         <div class="col-sm-12">
                             <div class="form-group has-feedback">
                                 <label class="control-label">Введите название статьи:</label>
-                                <input type="text" id="chapter0" name="Chapter" class="form-control" required="required" placeholder="Например, Делегаты и События" minlength="2" maxlength="30">
+                                <input type="text" id="chapter0" name="Chapter" class="form-control" required="required" placeholder="Например, Делегаты и События" minlength="2" maxlength="30" value="@Model.Chapter">
                                 <span class="glyphicon form-control-feedback"></span>
                             </div>
                         </div>
-
                     </div>
 
 
