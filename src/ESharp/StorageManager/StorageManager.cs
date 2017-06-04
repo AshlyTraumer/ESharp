@@ -129,16 +129,16 @@ namespace ESharp
 
         public Template01ViewModel GetArticle(int article, int chapter)
         {
-            var chapters = GetChapterList();
-            var chapterTitle = chapters[chapter];
-            var articles = GetArticlesTitlesByChapter(chapterTitle);
+                var chapters = GetChapterList();
+                var chapterTitle = chapters[chapter];
+                var articles = GetArticlesTitlesByChapter(chapterTitle);
 
-            var path = $"{Directory.GetCurrentDirectory()}\\Articles\\{chapterTitle}\\{articles[article]}.zip";
+                var path = $"{Directory.GetCurrentDirectory()}\\Articles\\{chapterTitle}\\{articles[article]}.zip";
 
-            var array = File.ReadAllBytes(path);
-            var model = _zipper.Unzip(array);
-            model.Chapter = chapterTitle;
-            return model;
+                var array = File.ReadAllBytes(path);
+                var model = _zipper.Unzip(array);
+                model.Chapter = chapterTitle;
+                return model;
         }
 
         public void WriteOldData(StringValues stringValues, StringValues stringValues1)

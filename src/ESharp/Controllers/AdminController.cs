@@ -15,22 +15,23 @@ namespace ESharp.Controllers
         public IActionResult Index(int page = 0)
         {
             var wrapper = new StorageManager();
-            
+            var model = new List<AdminView>();
             var chapterList = wrapper.GetChapterList();
             if (chapterList.Count != 0)
             {
-                var articlesList = wrapper.GetArticlesTitlesByChapter(chapterList[page]);
-
-                var view = new AdminView
+                for (int i = 0; i < chapterList.Count; i++)
                 {
-                    Chapters = chapterList,
-                    CurrentPage = page,
-                    Articles = articlesList
-                };
+                    var articlesList = wrapper.GetArticlesTitlesByChapter(chapterList[i]);
 
-                return View(view);
+                    model.Add(new AdminView
+                    {
+                        Chapter = chapterList[i],
+                        CurrentPage = i,
+                        Articles = articlesList
+                    });
+                }
             }
-            return View(new AdminView {Articles = new List<string>(), Chapters = new List<string>()});
+            return View(model);
         }
 
         [HttpGet]
@@ -86,13 +87,21 @@ namespace ESharp.Controllers
                 return PartialView("../Shared/Template1/_TemplateForm1", viewModel.GetPartialModel(Request.Form));
             }
 
-            return PartialView("../Shared/Template1/_Template1", viewModel);
+            return PartialView("../Shared/Template1/_TemplateDialog", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult GetArticlePartial(int article = 0, int chapter = 0)
+        {
+            var wrapper = new StorageManager();
+            var model = wrapper.GetArticle(chapter, article);
+            return PartialView("../Shared/Template1/_Template1", model);
         }
 
         [HttpGet]
         public ActionResult GetChapterPartial()
         {
-            return PartialView("../Shared/Chapter/_ChapterForm");
+            return PartialView("../Shared/Chapter/_ChapterForm", new ChapterModel());
         }
 
         [HttpGet]
@@ -152,7 +161,7 @@ namespace ESharp.Controllers
             }
 
             var wrapper = new StorageManager();
-            wrapper.WriteChapterNewToStorage(model);
+            wrapper.WriteChapterToStorage(model);
 
             return RedirectToAction("Index", "Admin", new { page = 0 });
         }

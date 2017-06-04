@@ -1,4 +1,4 @@
-﻿@model ESharp.Models.AdminView
+﻿@model List<ESharp.Models.AdminView>
 
 @{
     ViewBag.Title = "title";
@@ -9,7 +9,11 @@
 }
 
 
-
+<div id="subheader">
+    <div id="menu" style="position: absolute; margin-left: 300px;">
+        <a href="#" id="newArticle">Добавить статью</a> | <a href="#" id="newChapter">Добавить раздел</a><a style="margin-left: 700px">Выход</a>
+    </div>
+</div>
 
 <table style="position: absolute; top: 25%">
     <tr>
@@ -21,15 +25,15 @@
                     <a class="btn btn-default btn-link" id="deleteChapter"><span class="glyphicon glyphicon-remove"></span></a>
                 </div>
                 <div class="list-group" style="position: absolute; width: 28%;">
-                    @foreach (var item in Model.Chapters)
+                    @foreach (var ite in Model)
                     {
-                        if (Model.CurrentPage == i)
+                        if (ite.CurrentPage == i)
                         {
-                            <a href="@Url.Action("Index", "Admin", new {page = i++})" class="list-group-item" id="customActive">@item</a>
+                            <a href="@Url.Action("Index", "Admin", new {page = i++})" class="list-group-item" id="customActive" style="color:white">@ite.Chapter</a>
                         }
                         else
                         {
-                            <a href="@Url.Action("Index", "Admin", new {page = i++})" class="list-group-item">@item</a>
+                            <a href="@Url.Action("Index", "Admin", new {page = i++})" class="list-group-item">@ite.Chapter</a>
                         }
                     }
                 </div>
@@ -38,23 +42,32 @@
         <td>
             <div id="admin_right_content">
                 <div class="list-group">
-                    @foreach (var item in Model.Articles)
+                    @foreach (var it in Model)
                     {
-                        <div class="row">
-                            <div class="col-sm-10">
-                                <a href="@Url.Action("Index", "Admin")" class="list-group-item">@item</a>
-                            </div>
-                            <div class="col-sm-2 form-inline">
-                                <a type="button" class="btn btn-default btn-link" href="#" onclick="ChangeArticleView(@k,@Model.CurrentPage)"> @{ k++;}
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </a>
+                        if (it.CurrentPage == 0)
+                        {
+                            @foreach (var ii in it.Articles)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <a href="@Url.Action("Index", "Admin")" class="list-group-item">@ii</a>
+                                    </div>
+                                    <div class="col-sm-2 form-inline">
+                                        <a type="button" class="btn btn-default btn-link" href="#" onclick="ChangeArticleView(@k,@it.CurrentPage)">
+                                            @{ k++;}
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </a>
 
-                                <a type="submit" class="btn btn-default btn-link" href="@Url.Action("DeleteArticle", "Admin", new { chapter = Model.CurrentPage, article = j++})">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </a>
-                            </div>
-                        </div>
-                    }
+                                        <a type="submit" class="btn btn-default btn-link" href="@Url.Action("DeleteArticle", "Admin", new { chapter = it.CurrentPage, article = j++})">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                                }
+
+                                                    }
+
+                                                }
                 </div>
             </div>
         </td>
@@ -66,7 +79,7 @@
         <div class="form-inline">
             <label class="control-label">Выберите раздел:</label>
             <select class="form-control" style="width: 74%; margin-left: 2%" name="Chapter" id="chapter">
-                @foreach (var chapter in Model.Chapters)
+                @foreach (var chapter in Model)
                 {
                     <option value="@chapter">@chapter</option>
                 }
@@ -81,7 +94,7 @@
         <label class="control-label">Выберите раздел:</label>
         <select class="form-control" style="width: 74%; margin-left: 2%" name="ChapterSelect" id="chapterSelect">
             <option value="-1"></option>
-            @foreach (var chapter in Model.Chapters)
+            @foreach (var chapter in Model)
             {
                 <option value="@chapter">@chapter</option>
             }

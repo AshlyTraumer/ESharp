@@ -16,7 +16,7 @@ namespace ESharp.Controllers
         // GET: /<controller>/
         public ActionResult Index(int chapterId)
         {
-            long size = 0;
+           // long size = 0;
           //  var files = Request.Form.Files;
            // FileDetails fileDetails;
           /*  using (var reader = new StreamReader(files[0].OpenReadStream()))

@@ -9,6 +9,9 @@ namespace ESharp.Models
             Chapter = form["Chapter"];
         }
 
+        public ChapterModel()
+        { }
+
         public string Chapter { get; private set; }
     }
 }

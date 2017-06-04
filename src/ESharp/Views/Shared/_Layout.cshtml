@@ -24,11 +24,7 @@
             <b>ESharp | Справочник юного программиста</b>
         </h2>
     </div>
-<div id="subheader">
-    <div id="menu" style="position: absolute; margin-left: 300px;">
-        <a href="#" id="newArticle">Добавить статью</a> | <a href="#" id="newChapter">Добавить раздел</a>
-    </div>
-</div>
+
 
 
     <div id="dialog" hidden title="Добавление статьи">
@@ -36,25 +32,25 @@
             <tbody>
                 <tr>
                     <td>
-                        <button class="template" id="choose1">Template 1</button>
+                        <button class="template" id="choose1" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/1.png")"></button>
                     </td>
                     <td>
-                        <button class="template">Template 2</button>
+                        <button class="template" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/2.png")"></button>
                     </td>
                     <td>
-                        <button class="template">Template 3</button>
+                        <button class="template" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/3.png")"></button>
                     </td>
                 </tr>
                 <tr style="height:10px;"><td></td><td></td><td></td></tr>
                 <tr>
                     <td>
-                        <button class="template">Template 4</button>
+                        <button class="template" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/4.png")"></button>
                     </td>
                     <td>
-                        <button class="template">Template 5</button>
+                        <button class="template" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/5.png")"></button>
                     </td>
                     <td>
-                        <button class="template">Template 6</button>
+                        <button class="template" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/6.png")"></button>
                     </td>
                 </tr>
 
@@ -153,9 +149,10 @@
             $.ajax({
                 type: "Get",
                 url: '@Url.Action("GetChapterPartial","Admin")',
-                contentType: 'application/json; charset=utf-8',
+               // contentType: 'application/json; charset=utf-8',
                 dataType: 'html',
                 success: function (data) {
+                    alert(data);
                     $('#dialogChapter').html(data);
                 }
             });
