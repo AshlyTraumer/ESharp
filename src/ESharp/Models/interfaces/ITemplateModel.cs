@@ -9,6 +9,7 @@ namespace ESharp.interfaces
     {
         public string Chapter { get; private set; }
         public string Title { get; private set; }
+        public int TemplateId { get; protected set; }
 
         public TemplateModel(IFormCollection form)
         {

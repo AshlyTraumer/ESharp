@@ -12,9 +12,9 @@
     });
 </script>
 <div id="subheader">
-    <div id="menu" style="position: absolute; margin-left: 85%; margin-top: 1%">
-        <h3 id="path" style="position: absolute; margin-left: -300px">123fffffffff</h3>
-        <a href="#" id="loginBtn">Вход</a>
+    <div id="menu" style="position: absolute; margin-left: 25%; margin-top: 1%">
+        <a href="#" id="pathBtn">Some Path</a>
+        <a href="#" id="loginBtn" style="right: 0px">Вход</a>
     </div>
 </div>
 <table style="position: absolute; top: 25%">
@@ -23,7 +23,7 @@
             <div id="left_content" style="opacity:1">
             </div>
         </td>
-        <td>
+        <td valign="top">
             <div class="right_content" id="accordion" style="margin-top: -5px; left: 20px;">
                 @foreach (var item in Model)
                 {
@@ -96,7 +96,6 @@
             processData: false,
             data: { chapter: 1, article: 1 },
             success: function (data) {
-                //alert(data.indexOf("<form method="));
                 // if (data.indexOf("<form method=") != -1) {
                     $('#left_content').html(data);
                 

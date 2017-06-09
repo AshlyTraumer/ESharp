@@ -53,7 +53,7 @@
                                         <a href="@Url.Action("Index", "Admin")" class="list-group-item">@ii</a>
                                     </div>
                                     <div class="col-sm-2 form-inline">
-                                        <a type="button" class="btn btn-default btn-link" href="#" onclick="ChangeArticleView(@k,@it.CurrentPage)">
+                                        <a href='javascript:void(0)' class="btn btn-default btn-link change-article-btn" data-chapter="@k", data-article="@it.CurrentPage">
                                             @{ k++;}
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </a>
@@ -160,40 +160,21 @@
                 effect: "blind",
                 duration: 1000
             }
-        });
+        }); //
 
         $("#deleteChapter").click(function() {
-
             $("#dialogDeleteChapter").dialog('open');
         });
 
         $("#editChapter").click(function () {
-
             $("#dialogChangeChapte").dialog('open');
         });
-    });
 
-    $("#chapterSelect").change(function () {
-        alert($("#chapterSelect").val());
-        $("#chapterEdit").val($("#chapterSelect").val());
-    });
-
-    function ChangeArticleView(chapter, article) {
-        var isA = confirm("Внимание. При изменении статьи старые картинки не сохраняются. Вы желаете продолжить?");
-        if (isA == false) return;
-
-        $("#dialogPreview").dialog('open');
-
-        $.ajax({
-            type: "GET",
-            url: '@Url.Action("ChangeArticleView", "Admin")' + '?article='+article+'&chapter='+chapter,
-            contentType: false,
-            processData: false,
-           
-            success: function (data) {
-                $('#dialogPreview').html(data);
-            }
+        $("#chapterSelect").change(function () {
+            $("#chapterEdit").val($("#chapterSelect").val());
         });
-    }
+    });
+
+    
 
 </script>

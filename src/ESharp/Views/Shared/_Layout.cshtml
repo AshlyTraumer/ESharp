@@ -9,10 +9,11 @@
         <script src="@Url.Content("js/accordeon.js")"></script>
         <link rel="stylesheet" href="~/css/index.css" />
         <link rel="stylesheet" href="~/css/admin.css"  />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="~/js/bootstrap.css">
+        <link rel="stylesheet" href="~/css/ui.css">
+        <script src="~/js/jQuery.js"></script>
+        <script src="~/js/jQueryUi.js"></script>
+        <script src="~/js/admin-form.js"></script>
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     </environment>
 </head>
@@ -32,25 +33,25 @@
             <tbody>
                 <tr>
                     <td>
-                        <button class="template" id="choose1" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/1.png")"></button>
+                        <button class="template" data-template='1' style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/6.png")"></button>
                     </td>
                     <td>
-                        <button class="template" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/2.png")"></button>
+                        <button class="template" data-template='2' style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/2.png")"></button>
                     </td>
                     <td>
-                        <button class="template" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/3.png")"></button>
+                        <button class="template" data-template='3' style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/3.png")"></button>
                     </td>
                 </tr>
                 <tr style="height:10px;"><td></td><td></td><td></td></tr>
                 <tr>
                     <td>
-                        <button class="template" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/4.png")"></button>
+                        <button class="template" data-template='4'  style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/4.png")"></button>
                     </td>
                     <td>
-                        <button class="template" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/5.png")"></button>
+                        <button class="template" data-template='5'  style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/5.png")"></button>
                     </td>
                     <td>
-                        <button class="template" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/6.png")"></button>
+                        <button class="template" data-template='6'  style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/1.png")"></button>
                     </td>
                 </tr>
 
@@ -116,79 +117,22 @@
                     duration: 1000
                 }
             });
-        });
 
-        $('#dialogPreview').dialog({
-            autoOpen: false,
-            width: 1200,
-            height: 580,
-            show: {
-                effect: "blind",
-                duration: 1000
-            },
-            hide: {
-                effect: "blind",
-                duration: 1000
-            }
+            $('#dialogPreview').dialog({
+                autoOpen: false,
+                width: 1200,
+                height: 580,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "blind",
+                    duration: 1000
+                }
+            });
         });
-
         
-
-       
-
-
-
-        $('#newArticle').click(function () {
-            $('#dialog').dialog('open');
-        });
-
-        $('#newChapter').click(function () {
-          
-            $('#dialogChapter').dialog('open');
-
-            $.ajax({
-                type: "Get",
-                url: '@Url.Action("GetChapterPartial","Admin")',
-               // contentType: 'application/json; charset=utf-8',
-                dataType: 'html',
-                success: function (data) {
-                    alert(data);
-                    $('#dialogChapter').html(data);
-                }
-            });
-        });
-
-        $('#choose1').click(function () {
-            $('#dialog').dialog('close');
-            $('#dialogChoose').dialog('close');
-            $("#dialogChangeArticle").dialog('close');
-            $('#dialogPreview').dialog('open');
-
-            var data = new FormData();
-            data.append("Get","");
-
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("GetTemplatePartial","Admin")',
-                contentType: false,
-                processData: false,
-                data: data,
-                success: function (data) {
-                    $('#dialogPreview').html(data);
-                }
-            });
-
-            $(document).ajaxStart(function () {
-                $('#dialogChoose').html("Загрузка");
-            });
-
-            $('#next-chooseOk').click(function () {
-                
-                $('#dialogOk').dialog('close');
-            });
-
-
-        });
     </script>
  
 

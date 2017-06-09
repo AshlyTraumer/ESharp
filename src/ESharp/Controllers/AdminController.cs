@@ -40,7 +40,7 @@ namespace ESharp.Controllers
             var wrapper = new StorageManager();
             ViewBag.Chapters = wrapper.GetChapterList();
 
-            return PartialView("../Shared/Template1/_TemplateForm1", new Template01ViewModel());
+            return PartialView("../Shared/Template1/_Form", new Template01ViewModel());
         }
 
     
@@ -48,34 +48,29 @@ namespace ESharp.Controllers
         [HttpPost]
         public ActionResult GetTemplatePartial()
         {
-            var viewModel = new Template01ViewModel();
+            IBaseModel viewModel;
 
-            if (Request.Form.IsValid(typeof(Template01ViewModel)))
+
+            switch (Request.Form["template"])
             {
-                var model = new Template01Model(Request.Form);
+                case "1": viewModel = new Template01ViewModel();
+                    break;
 
-                var wrapper = new StorageManager();
-                wrapper.WriteModelToDat(model);
+                case "2":
+                    viewModel = new Template02ViewModel();
+                    break;
 
-                if (Request.Form.ContainsKey("OldChapter"))
-                {
-                    wrapper.WriteOldData(Request.Form["OldChapter"], Request.Form["OldArticle"]);
-                }
-                else
-                {
-                    wrapper.WriteOldData("", "");
-                }
+                case "3":
+                    viewModel = new Template03ViewModel();
+                    break;
 
-                viewModel = new Template01ViewModel
-                {
-                    Title = model.Title,
-                    Description = model.Description
-                };
+                default: viewModel = new Template03ViewModel();
+                    break;
+            }
 
-                using (var binaryReader = new BinaryReader(model.ImgUrl0.OpenReadStream()))
-                {
-                    viewModel.ImgUrl0 = binaryReader.ReadBytes((int)model.ImgUrl0.Length);
-                }
+            if (Request.Form.IsValid(viewModel.GetType()))
+            {
+                viewModel.Bind(Request.Form);
             }
             else
             {
@@ -83,19 +78,21 @@ namespace ESharp.Controllers
                 ModelState.AddModelError("Valid", "Ошибка валидации. Не все поля заполнены");
                 var wrapper = new StorageManager();
                 ViewBag.Chapters = wrapper.GetChapterList();
-               
-                return PartialView("../Shared/Template1/_TemplateForm1", viewModel.GetPartialModel(Request.Form));
+
+
+                return PartialView($"../Shared/Template{Request.Form["template"]}/_Form", viewModel.GetPartialModel(Request.Form));
             }
 
-            return PartialView("../Shared/Template1/_TemplateDialog", viewModel);
+            return PartialView($"../Shared/Template{Request.Form["template"]}/_Preview", viewModel);
         }
 
         [HttpPost]
         public ActionResult GetArticlePartial(int article = 0, int chapter = 0)
         {
+            var template = "";
             var wrapper = new StorageManager();
-            var model = wrapper.GetArticle(chapter, article);
-            return PartialView("../Shared/Template1/_Template1", model);
+            var model = wrapper.GetArticle(chapter, article, out template);
+            return PartialView($"../Shared/Template{template}/_View", model);
         }
 
         [HttpGet]
@@ -177,9 +174,10 @@ namespace ESharp.Controllers
         public IActionResult ChangeArticleView(int article = 0, int chapter = 0)
         {
             var wrapper = new StorageManager();
-            var model = wrapper.GetArticle(chapter, article);
+            var template = "";
+            var model = wrapper.GetArticle(chapter, article, out template);
             ViewBag.Chapters = wrapper.GetChapterList();
-            return PartialView("../Shared/Template1/_TemplateForm1", model);
+            return PartialView($"../Shared/Template{template}/_Form", model);
         }
 
         

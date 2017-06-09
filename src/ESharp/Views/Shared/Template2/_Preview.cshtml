@@ -1,0 +1,58 @@
+﻿@using System.Net
+@model ESharp.Models.Template02ViewModel
+
+@{
+    ViewBag.Title = Model.Title + "(Preview)";
+}
+<div style="height: 90%;">
+    <p><h1>@Model.Title</h1></p>
+    <hr />
+    @if (Model.ImgUrl0 != null)
+    {
+        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.ImgUrl0))" style="max-width: 90%;max-height: 80%; float: left; padding-right: 3%;" />
+    }
+
+</div>
+<button type="submit" class="btn btn-primary" id="back-choosePreview" style="margin-bottom: 0;">Назад</button>
+<button type="submit" class="btn btn-primary pull-right" id="next-choosePreview">Далее</button>
+
+
+<script>
+        $('#back-choosePreview').click(function () {
+
+            $('#dialog').dialog('close');
+            $('#dialogChoose').dialog('close');
+            $("#dialogChangeArticle").dialog('close');
+
+
+        });
+
+        $('#next-choosePreview').click(function () {
+
+            $.ajax({
+                type: "Get",
+                url: '@Url.Action("AcceptForm","Admin")',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'html'
+            });
+
+            $('#dialogPreview').dialog('close');
+            $('#dialog').dialog('close');
+            $('#dialogChangeArticle').dialog('close');
+            alert("Статья добавлена успешно");
+            window.location.href = "@Url.Action("Index", "Admin")";
+        });
+
+
+</script>
+
+<style>
+    #descr {
+        height: 100%;
+        width: 100%;
+        font-size: medium;
+        word-wrap: break-word;
+        text-align: justify;
+        white-space: pre-line;
+    }
+</style>

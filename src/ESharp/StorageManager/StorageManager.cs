@@ -28,7 +28,7 @@ namespace ESharp
             serializer.SerializeData(data);
             var title = model.Title.Replace('.', ',');
 
-            Path = $"{Directory.GetCurrentDirectory()}\\Articles\\{model.Chapter}\\{title}.zip";
+            Path = $"{Directory.GetCurrentDirectory()}\\Articles\\{model.Chapter}\\{title}_{model.TemplateId}.zip";
             serializer.SerializePath(Path);
         }
 
@@ -127,7 +127,7 @@ namespace ESharp
             }
         }
 
-        public Template01ViewModel GetArticle(int article, int chapter)
+        public IBaseModel GetArticle(int article, int chapter, out string template)
         {
                 var chapters = GetChapterList();
                 var chapterTitle = chapters[chapter];
@@ -136,7 +136,9 @@ namespace ESharp
                 var path = $"{Directory.GetCurrentDirectory()}\\Articles\\{chapterTitle}\\{articles[article]}.zip";
 
                 var array = File.ReadAllBytes(path);
-                var model = _zipper.Unzip(array);
+                template = articles[article].Substring(articles[article].Length - 1);
+
+                var model = _zipper.Unzip(array, template);
                 model.Chapter = chapterTitle;
                 return model;
         }
