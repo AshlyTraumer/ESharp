@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using ESharp.Controllers;
 using ESharp.interfaces;
 using ESharp.Models;
@@ -51,7 +49,9 @@ namespace ESharp
             }
 
             if (!Directory.Exists(pathDir))
+            {
                 Directory.CreateDirectory(pathDir);
+            }
         }
 
         public List<string> GetChapterList()
@@ -110,6 +110,7 @@ namespace ESharp
             {
                 fi.Delete();
             }
+
             Directory.Delete(path);
 
             var list = GetChapterList();
@@ -127,20 +128,21 @@ namespace ESharp
             }
         }
 
-        public IBaseModel GetArticle(int article, int chapter, out string template)
+        public IBaseModel GetArticle(int chapter, int article, out string template)
         {
-                var chapters = GetChapterList();
-                var chapterTitle = chapters[chapter];
-                var articles = GetArticlesTitlesByChapter(chapterTitle);
+            var chapters = GetChapterList();
+            var chapterTitle = chapters[chapter];
+            var articles = GetArticlesTitlesByChapter(chapterTitle);
 
-                var path = $"{Directory.GetCurrentDirectory()}\\Articles\\{chapterTitle}\\{articles[article]}.zip";
+            var path = $"{Directory.GetCurrentDirectory()}\\Articles\\{chapterTitle}\\{articles[article]}.zip";
 
-                var array = File.ReadAllBytes(path);
-                template = articles[article].Substring(articles[article].Length - 1);
+            var array = File.ReadAllBytes(path);
+            template = articles[article].Substring(articles[article].Length - 1);
 
-                var model = _zipper.Unzip(array, template);
-                model.Chapter = chapterTitle;
-                return model;
+            var model = _zipper.Unzip(array, template);
+            model.Chapter = chapterTitle;
+
+            return model;
         }
 
         public void WriteOldData(StringValues stringValues, StringValues stringValues1)
@@ -152,8 +154,8 @@ namespace ESharp
 
         public void WriteNewModelToStorage(byte[] data, string path, string oldChapter, string oldArticle)
         {
-            RemoveArticleByString(oldChapter,oldArticle);
-            WriteModelToStorage(data,path);
+            RemoveArticleByString(oldChapter, oldArticle);
+            WriteModelToStorage(data, path);
         }
     }
 }

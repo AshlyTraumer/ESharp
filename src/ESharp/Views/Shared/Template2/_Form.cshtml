@@ -1,4 +1,5 @@
 ﻿@model ESharp.Models.Template02ViewModel
+<script src="~/js/admin-template2.js"></script>
 <table>
     <tr>
         <td width="60%">
@@ -16,7 +17,7 @@
 
                                 <div class="form-inline">
                                     <label class="control-label">Выберите раздел:</label>
-                                    <select class="form-control" style="width: 74%; margin-left: 2%" name="Chapter" id="chapter">
+                                    <select class="form-control" style="width: 74%; margin-left: 2%" name="Chapter" id="chapterId">
                                         <option value="non"></option>
                                         @foreach (var c in ViewBag.Chapters)
                                         {
@@ -64,58 +65,7 @@
 <script>
     var data = new FormData();
     $(window).ready(function () {
-
         data.append("OldArticle", "@Model.Title");
         data.append("OldChapter", "@Model.Chapter");
-    });
-
-
-
-    $('#back-chooseTemplate').click(function () {
-
-        $('#dialog').dialog('open');
-        $('#dialogChoose').dialog('close');
-        $("#dialogChangeArticle").dialog('close');
-        $('#dialogPreview').dialog('close');
-    });
-
-    $('#next-chooseTemplate2').click(function () {
-        var fileUpload = $("#file").get(0);
-
-        var files = fileUpload.files;
-
-
-        for (var i = 0; i < files.length ; i++) {
-            data.append(files[i].name, files[i]);
-        }
-
-        var postData = $('#title');
-        $.each(postData, function (key, input) {
-            data.append(input.name, input.value);
-        });
-
-        data.append("template", "2");
-        data.append("Chapter", $("#chapter :selected").text());
-
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("GetTemplatePartial", "Admin")',
-            contentType: false,
-            processData: false,
-            data: data,
-            success: function (data) {
-                if (data.indexOf("<form method=") != -1) {
-                    $('#dialogPreview').html(data);
-                }
-                else {
-                    $('#dialogChoose').dialog('open');
-                    $('#dialogChoose').html(data);
-                }
-            },
-            error: function () {
-                alert("There was error uploading files!");
-            }
-        });
-
     });
 </script>

@@ -16,18 +16,9 @@
                             </div>
                         </div>
                     </div>
-
-
-                   
-
-
                     <button type="submit" class="btn btn-primary pull-right" id="add">Далее</button>
-
-
                 </div>
             </div>
-
-
         </div>
     </div>
 </form>
@@ -41,12 +32,6 @@
         $.each(postData, function (key, input) {
             data.append(input.name, input.value);
         });
-      
-        
-            
-       
-
-        
 
         $.ajax({
             type: "POST",
@@ -55,7 +40,6 @@
             processData: false,
             dataType: 'html',
             data: data,
-            
             error: function () {
                 alert("Раздел успешно добавлен");
             }

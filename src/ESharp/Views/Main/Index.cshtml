@@ -1,4 +1,4 @@
-﻿@model List<ESharp.Models.AdminView>
+﻿@model List<ESharp.Models.AdminItem>
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
@@ -46,8 +46,6 @@
                         }
                     </div>
                 }
-               
-
             </div>
         </td>
     </tr>
@@ -90,15 +88,13 @@
 
     $(document).ready(function () {
         $.ajax({
-            type: "POST",
+            type: "Get",
             url: '@Url.Action("GetArticlePartial", "Admin")',
             contentType: false,
             processData: false,
             data: { chapter: 1, article: 1 },
             success: function (data) {
-                // if (data.indexOf("<form method=") != -1) {
                     $('#left_content').html(data);
-                
             },
             error: function () {
                 alert("There was error uploading files!");
@@ -120,7 +116,6 @@
         });
 
         $("#registerBtn").click(function () {
-
             $("#register").dialog('open');
         });
 
@@ -139,9 +134,7 @@
         });
 
         $("#loginBtn").click(function () {
-
             $("#login").dialog('open');
         });
     });
-
 </script>

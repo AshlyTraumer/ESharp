@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ESharp

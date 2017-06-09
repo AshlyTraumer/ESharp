@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using ESharp.interfaces;
 using ESharp.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace ESharp.Controllers
 {
@@ -60,9 +54,7 @@ namespace ESharp.Controllers
                     }
 
                     return memoryStream.GetBuffer();
-
                 }
-
             }
         }
 
@@ -114,21 +106,9 @@ namespace ESharp.Controllers
                                 property.SetValue(model, binaryReader.ReadBytes((int)entry.Length));
                             }
                         }
-                        
-                       
-
-
-
-
-                        //  csvList.Add(new CsvFile(entry.FullName, list));
-
                     }
-
                 }
-
             }
-
-
 
             return model;
         }

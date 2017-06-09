@@ -2,7 +2,8 @@
     BindNewArticleButtonClick();
     BindNewChapterButtonClick();
     BindGetFormButtonClick();
-    ChangeArticleView();
+    BindChangeArticleView();
+    BindFormsOpener();
 });
 
 function BindNewArticleButtonClick() {
@@ -58,7 +59,7 @@ function BindGetFormButtonClick() {
     });
 }
 
-function ChangeArticleView() {
+function BindChangeArticleView() {
     $('.change-article-btn').click(function () {
             var chapter = $(this).data().chapter;
             var article = $(this).data().article;
@@ -79,3 +80,19 @@ function ChangeArticleView() {
             });
         });
 }
+
+function BindFormsOpener() {
+    $("#deleteChapter").click(function() {
+        $("#dialogDeleteChapter").dialog('open');
+    });
+
+    $("#editChapter").click(function() {
+        $("#dialogChangeChapte").dialog('open');
+    });
+
+    $("#chapterSelect").change(function() {
+        $("#chapterEdit").val($("#chapterSelect").val());
+    });
+}
+
+

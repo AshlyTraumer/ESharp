@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using ESharp.interfaces;
 using ESharp.Models;
 using ESharp.wwwroot.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -11,19 +8,18 @@ namespace ESharp.Controllers
 {
     public class AdminController : Controller
     {
-        // GET: /<controller>/
         public IActionResult Index(int page = 0)
         {
             var wrapper = new StorageManager();
-            var model = new List<AdminView>();
+            var model = new List<AdminItem>();
             var chapterList = wrapper.GetChapterList();
             if (chapterList.Count != 0)
             {
-                for (int i = 0; i < chapterList.Count; i++)
+                for (var i = 0; i < chapterList.Count; i++)
                 {
                     var articlesList = wrapper.GetArticlesTitlesByChapter(chapterList[i]);
 
-                    model.Add(new AdminView
+                    model.Add(new AdminItem
                     {
                         Chapter = chapterList[i],
                         CurrentPage = i,
@@ -31,25 +27,18 @@ namespace ESharp.Controllers
                     });
                 }
             }
-            return View(model);
+
+            return View(new AdminModel
+            {
+                AdminItems = model,
+                CurrentPage = page
+            });
         }
-
-        [HttpGet]
-        public ActionResult GetFormPartial()
-        {
-            var wrapper = new StorageManager();
-            ViewBag.Chapters = wrapper.GetChapterList();
-
-            return PartialView("../Shared/Template1/_Form", new Template01ViewModel());
-        }
-
-    
-
+        
         [HttpPost]
         public ActionResult GetTemplatePartial()
         {
             IBaseModel viewModel;
-
 
             switch (Request.Form["template"])
             {
@@ -79,23 +68,22 @@ namespace ESharp.Controllers
                 var wrapper = new StorageManager();
                 ViewBag.Chapters = wrapper.GetChapterList();
 
-
                 return PartialView($"../Shared/Template{Request.Form["template"]}/_Form", viewModel.GetPartialModel(Request.Form));
             }
 
             return PartialView($"../Shared/Template{Request.Form["template"]}/_Preview", viewModel);
         }
 
-        [HttpPost]
         public ActionResult GetArticlePartial(int article = 0, int chapter = 0)
         {
             var template = "";
             var wrapper = new StorageManager();
             var model = wrapper.GetArticle(chapter, article, out template);
+
             return PartialView($"../Shared/Template{template}/_View", model);
         }
 
-        [HttpGet]
+        [HttpGet] 
         public ActionResult GetChapterPartial()
         {
             return PartialView("../Shared/Chapter/_ChapterForm", new ChapterModel());
@@ -109,6 +97,7 @@ namespace ESharp.Controllers
             var data = serializer.DeserializeData();
             var oldChapter = serializer.DeserializeOldChapterPath();
             var oldArticle = serializer.DeserializeOldArticlePath();
+
             var wrapper = new StorageManager();
 
             if (oldChapter == "")
@@ -119,8 +108,6 @@ namespace ESharp.Controllers
             {
                 wrapper.WriteNewModelToStorage(data, path, oldChapter, oldArticle);
             }
-
-
 
             return Redirect(Url.Action("Index","Admin", new {pages = 0}));
         }
@@ -167,6 +154,7 @@ namespace ESharp.Controllers
         {
             var wrapper = new StorageManager();
             wrapper.RemoveArticle(chapter, article);
+
             return RedirectToAction("Index", "Admin", new {page = chapter});
         }
 
@@ -177,16 +165,16 @@ namespace ESharp.Controllers
             var template = "";
             var model = wrapper.GetArticle(chapter, article, out template);
             ViewBag.Chapters = wrapper.GetChapterList();
+
             return PartialView($"../Shared/Template{template}/_Form", model);
         }
-
-        
 
         public IActionResult DeleteChapter(int article = 0, int chapter = 0)
         {
             var wrapper = new StorageManager();
             var request = Request.Form;
             wrapper.RemoveChapterByTitle(request["Chapter"]);
+
             return RedirectToAction("Index","Admin");
         }
     }
