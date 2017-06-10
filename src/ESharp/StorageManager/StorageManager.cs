@@ -145,6 +145,18 @@ namespace ESharp
             return model;
         }
 
+
+        public string GetPath(int chapter, int article)
+        {
+            var chapters = GetChapterList();
+            var chapterTitle = chapters[chapter];
+            var articles = GetArticlesTitlesByChapter(chapterTitle);
+
+            var path = $"... \\ {chapterTitle} \\ {articles[article].Substring(0, articles[article].Length - 2)}";
+
+            return path;
+        }
+
         public void WriteOldData(StringValues stringValues, StringValues stringValues1)
         {
             var serializer = new Serializer();

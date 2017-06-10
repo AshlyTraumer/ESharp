@@ -117,7 +117,7 @@ namespace ESharp.Models
 
             if (requestForm.ContainsKey("OldChapter"))
             {
-                wrapper.WriteOldData(requestForm["OldChapter"], requestForm["OldArticle"]);
+                wrapper.WriteOldData(requestForm["OldChapter"], requestForm["OldArticle"]+"_"+requestForm["template"]);
             }
             else
             {

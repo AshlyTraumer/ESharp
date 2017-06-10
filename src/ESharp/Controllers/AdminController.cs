@@ -10,29 +10,48 @@ namespace ESharp.Controllers
     {
         public IActionResult Index(int page = 0)
         {
-            var wrapper = new StorageManager();
-            var model = new List<AdminItem>();
-            var chapterList = wrapper.GetChapterList();
-            if (chapterList.Count != 0)
+            try
             {
-                for (var i = 0; i < chapterList.Count; i++)
+                var b = new byte[1];
+                HttpContext.Session.TryGetValue("login", out b);
+                if (b[0] != 1)
                 {
-                    var articlesList = wrapper.GetArticlesTitlesByChapter(chapterList[i]);
-
-                    model.Add(new AdminItem
-                    {
-                        Chapter = chapterList[i],
-                        CurrentPage = i,
-                        Articles = articlesList
-                    });
+                    return RedirectToAction("Index", "Main");
                 }
-            }
 
-            return View(new AdminModel
+                var wrapper = new StorageManager();
+                var model = new List<AdminItem>();
+                var chapterList = wrapper.GetChapterList();
+                if (chapterList.Count != 0)
+                {
+                    for (var i = 0; i < chapterList.Count; i++)
+                    {
+                        var articlesList = wrapper.GetArticlesTitlesByChapter(chapterList[i]);
+
+                        for (int j = 0; j < articlesList.Count; j++)
+                        {
+                            articlesList[j] = articlesList[j].Substring(0, articlesList[j].Length - 2);
+                        }
+
+                        model.Add(new AdminItem
+                        {
+                            Chapter = chapterList[i],
+                            CurrentPage = i,
+                            Articles = articlesList
+                        });
+                    }
+                }
+
+                return View(new AdminModel
+                {
+                    AdminItems = model,
+                    CurrentPage = page
+                });
+            }
+            catch
             {
-                AdminItems = model,
-                CurrentPage = page
-            });
+                return RedirectToAction("Index", "Main");
+            }
         }
         
         [HttpPost]
@@ -87,6 +106,15 @@ namespace ESharp.Controllers
         public ActionResult GetChapterPartial()
         {
             return PartialView("../Shared/Chapter/_ChapterForm", new ChapterModel());
+        }
+
+        [HttpGet]
+        public ActionResult GetPath(int chapter, int article)
+        {
+            var wrapper = new StorageManager();
+            var model = wrapper.GetPath(chapter, article);
+
+            return new JsonResult(new {path = model});
         }
 
         [HttpGet]
@@ -176,6 +204,12 @@ namespace ESharp.Controllers
             wrapper.RemoveChapterByTitle(request["Chapter"]);
 
             return RedirectToAction("Index","Admin");
+        }
+
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.Set("login", new byte[1] { 0 });
+            return RedirectToAction("Index", "Main");
         }
     }
 }

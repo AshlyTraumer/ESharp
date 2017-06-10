@@ -11,7 +11,7 @@
 
 <div id="subheader">
     <div id="menu" style="position: absolute; margin-left: 300px;">
-        <a href="#" id="newArticle">Добавить статью</a> | <a href="#" id="newChapter">Добавить раздел</a><a style="margin-left: 700px">Выход</a>
+        <a href="#" id="newArticle">Добавить статью</a> | <a href="#" id="newChapter">Добавить раздел</a><a style="margin-left: 700px" href="@Url.Action("LogOut","Admin")">Выход</a>
     </div>
 </div>
 
@@ -53,7 +53,7 @@
                                         <a href="@Url.Action("GetArticlePartial", "Admin", new {article = k, chapter = Model.CurrentPage})" class="list-group-item">@ii</a>
                                     </div>
                                     <div class="col-sm-2 form-inline">
-                                        <a href='javascript:void(0)' class="btn btn-default btn-link change-article-btn" data-chapter="@k" , data-article="@it.CurrentPage">
+                                        <a href='#' class="btn btn-default btn-link change-article-btn" data-chapter="@it.CurrentPage" , data-article="@k">
                                             @{ k++;}
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </a>

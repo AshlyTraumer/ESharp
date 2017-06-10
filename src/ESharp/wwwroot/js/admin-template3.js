@@ -41,8 +41,11 @@ function BindSender() {
             data.append(input.name, input.value);
         });
 
+
         data.append("template", "3");
         data.append("Chapter", $("#chapterId :selected").text());
+        data.append("OldChapter", $("#oldchapter").val());
+        data.append("OldArticle", $("#oldarticle").val());
 
         $.ajax({
             type: "POST",

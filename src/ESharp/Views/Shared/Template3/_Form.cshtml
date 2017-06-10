@@ -1,5 +1,6 @@
 ﻿@model ESharp.Models.Template03ViewModel
 <script src="~/js/admin-template3.js"></script>
+
 <table>
     <tr>
         <td width="60%">
@@ -10,6 +11,8 @@
                             <div class="panel-body">
 
                                 <div class="form-group">
+                                    <input type="hidden" id="oldchapter" name="OldChapter" class="form-control" value="@Model.Chapter" placeholder="Например, Делегаты и События" minlength="2" maxlength="30">
+                                    <input type="hidden" id="oldarticle" name="OldArticle" class="form-control" value="@Model.Title" placeholder="Например, Делегаты и События" minlength="2" maxlength="30">
                                     <label class="control-label">Введите название статьи:</label>
                                     <input type="text" id="title" name="Title" class="form-control" value="@Model.Title" placeholder="Например, Делегаты и События" minlength="2" maxlength="30">
                                 </div>
@@ -70,9 +73,6 @@
 <script>
     var data = new FormData();
     $(window).ready(function () {
-
-        data.append("OldArticle", "@Model.Title");
-        data.append("OldChapter", "@Model.Chapter");
     });
 
 </script>
