@@ -76,8 +76,20 @@ namespace ESharp.Controllers
                     model = new Template03ViewModel();
                     break;
 
+                case "4":
+                    model = new Template04ViewModel();
+                    break;
+
+                case "5":
+                    model = new Template05ViewModel();
+                    break;
+
+                case "6":
+                    model = new Template06ViewModel();
+                    break;
+
                 default:
-                   model = new Template03ViewModel();
+                   model = new Template06ViewModel();
                     break;
             }
 

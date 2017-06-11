@@ -10,7 +10,7 @@ namespace ESharp.wwwroot.Extensions
             var properties = type.GetProperties();
             foreach (var property in properties)
             {
-                if (property.Name.Contains("TemplateId"))
+                if (property.Name.Contains("TemplateId") || property.Name.Contains("ChapterSelect"))
                 {
                     continue;
                 }

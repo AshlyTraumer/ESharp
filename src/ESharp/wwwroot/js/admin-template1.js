@@ -15,7 +15,6 @@ function BindOpener() {
 
 function BindSender() {
     $('#next-chooseTemplate2').click(function () {
-
         var fileUpload = $("#file").get(0);
 
         var files = fileUpload.files;
@@ -33,8 +32,12 @@ function BindSender() {
         $.each(postData, function (key, input) {
             data.append(input.name, input.value);
         });
+
+
         data.append("template", "1");
         data.append("Chapter", $("#chapterId :selected").text());
+        data.append("OldChapter", $("#oldchapter").val());
+        data.append("OldArticle", $("#oldarticle").val());
 
         $.ajax({
             type: "POST",

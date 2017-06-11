@@ -19,7 +19,6 @@ function BindSender() {
 
         var files = fileUpload.files;
 
-
         for (var i = 0; i < files.length ; i++) {
             data.append(files[i].name, files[i]);
         }
@@ -29,8 +28,16 @@ function BindSender() {
             data.append(input.name, input.value);
         });
 
+        postData = $('#description');
+        $.each(postData, function (key, input) {
+            data.append(input.name, input.value);
+        });
+
+
         data.append("template", "2");
         data.append("Chapter", $("#chapterId :selected").text());
+        data.append("OldChapter", $("#oldchapter").val());
+        data.append("OldArticle", $("#oldarticle").val());
 
         $.ajax({
             type: "POST",

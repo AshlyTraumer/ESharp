@@ -1,4 +1,5 @@
-﻿@model ESharp.Models.Template01ViewModel
+﻿@model ESharp.Models.Template05ViewModel
+<script src="~/js/admin-template5.js"></script>
 <table>
     <tr>
         <td width="60%">
@@ -10,13 +11,15 @@
 
                                 <div class="form-group">
                                     <label class="control-label">Введите название статьи:</label>
+                                    <input type="hidden" id="oldchapter" name="OldChapter" class="form-control" value="@Model.Chapter" placeholder="Например, Делегаты и События" minlength="2" maxlength="30">
+                                    <input type="hidden" id="oldarticle" name="OldArticle" class="form-control" value="@Model.Title" placeholder="Например, Делегаты и События" minlength="2" maxlength="30">
                                     <input type="text" id="title" name="Title" class="form-control" value="@Model.Title" placeholder="Например, Делегаты и События" minlength="2" maxlength="30">
                                 </div>
 
 
                                 <div class="form-inline">
                                     <label class="control-label">Выберите раздел:</label>
-                                    <select class="form-control" style="width: 74%; margin-left: 2%" name="Chapter" id="chapter">
+                                    <select class="form-control" style="width: 74%; margin-left: 2%" name="Chapter" id="chapterId">
                                         <option value="non"></option>
                                         @foreach (var c in ViewBag.Chapters)
                                         {
@@ -35,9 +38,9 @@
 
                                 <hr>
 
-                               <div class="form-inline">
-                                    <label class="control-label">Выберите картинку:</label>
-                                    <input type="file" id="file" name="ImgUrl0" class="form-control" value="" style="width: 92%; margin-left: 2%">
+                                <div class="form-group has-feedback">
+                                    <label class="control-label">Введите листинг:</label>
+                                    <textarea id="description" class="form-control" rows="6 " name="Description">@Model.Description</textarea>
                                 </div>
 
                                 <hr />
@@ -56,7 +59,7 @@
             </form>
         </td>
         <td width="40%">
-            <button class="templateimg" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/5.png")"></button>
+            <button class="templateimg" style="border: 0px; padding-left:0px"><img src="@Url.Content("../images/2.png")"></button>
         </td>
     </tr>
 </table>
@@ -64,72 +67,6 @@
 <script>
     var data = new FormData();
     $(window).ready(function () {
-        
-        data.append("OldArticle", "@Model.Title");
-        data.append("OldChapter", "@Model.Chapter");
-    });
-
-
-
-    $('#back-chooseTemplate').click(function () {
-
-            $('#dialog').dialog('open');
-            $('#dialogChoose').dialog('close');
-            $("#dialogChangeArticle").dialog('close');
-            $('#dialogPreview').dialog('close');
-    });
-
-    $('#next-chooseTemplate2').click(function () {
-      //  $('#dialogChoose').dialog('open');
-       // $('#dialogPreview').dialog('close');
-       
-
-       
-
-        var fileUpload = $("#file").get(0);
-
-        var files = fileUpload.files;
-        alert($('#file').val());
-        
-          
-        for (var i = 0; i < files.length ; i++) {
-            data.append(files[i].name, files[i]);
-        }
-
-        var postData = $('#title');
-        $.each(postData, function (key, input) {
-            data.append(input.name, input.value);
-        });
-
-        postData = $('#description');
-        $.each(postData, function (key, input) {
-            data.append(input.name, input.value);
-        });
-        data.append("template", "2");
-        data.append("Chapter", $("#chapter :selected").text());
-
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("GetTemplatePartial", "Admin")',
-            contentType: false,
-            processData: false,
-            data: data,
-            success: function (data) {
-                alert(data.indexOf("<form method="));
-                if (data.indexOf("<form method=") != -1)
-                {
-                    $('#dialogPreview').html(data);
-                }
-            else
-            {
-                  $('#dialogChoose').dialog('open');
-               $('#dialogChoose').html(data);
-}
-            },
-            error: function () {
-                alert("There was error uploading files!");
-            }
-        });
 
     });
 </script>

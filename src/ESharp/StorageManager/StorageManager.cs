@@ -45,7 +45,7 @@ namespace ESharp
 
             using (var writer = File.AppendText(path))
             {
-                writer.Write(Environment.NewLine + model.Chapter);
+                writer.Write(model.Chapter + Environment.NewLine);
             }
 
             if (!Directory.Exists(pathDir))

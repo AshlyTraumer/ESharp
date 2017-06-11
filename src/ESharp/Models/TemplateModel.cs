@@ -10,7 +10,7 @@ namespace ESharp.Models
         public Template01Model(IFormCollection form) : base(form)
         {
             Description = ((string) form["Description"]);
-            Description = ((string) form["Description"]).Replace("\r\n","<br>");
+           // Description = ((string) form["Description"]).Replace("\r\n","<br>");
             ImgUrl0 = form.Files[0];
             TemplateId = 1;
         }
@@ -48,5 +48,52 @@ namespace ESharp.Models
 
         public IFormFile ImgUrl0 { get; private set; }
         public IFormFile ImgUrl1 { get; private set; }
+    }
+
+    [Serializable]
+    public class Template04Model : TemplateModel
+    {
+        public Template04Model(IFormCollection form) : base(form)
+        {
+            ImgUrl0 = form.Files[0];
+            ImgUrl1 = form.Files[1];
+            TemplateId = 4;
+        }
+
+        public Template04Model() { }
+
+        public IFormFile ImgUrl0 { get; private set; }
+        public IFormFile ImgUrl1 { get; private set; }
+    }
+
+    [Serializable]
+    public class Template05Model : TemplateModel
+    {
+        public Template05Model(IFormCollection form) : base(form)
+        {
+            Description = ((string)form["Description"]);
+            // Description = ((string) form["Description"]).Replace("\r\n","<br>");
+            //ImgUrl0 = form.Files[0];
+            TemplateId = 5;
+        }
+
+        public Template05Model() { }
+
+        public string Description { get; private set; }
+    }
+
+    [Serializable]
+    public class Template06Model : TemplateModel
+    {
+        public Template06Model(IFormCollection form) : base(form)
+        {
+            Description = ((string)form["Description"]);
+            // Description = ((string) form["Description"]).Replace("\r\n","<br>");
+            TemplateId = 6;
+        }
+
+        public Template06Model() { }
+
+        public string Description { get; private set; }
     }
 }

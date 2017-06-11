@@ -15,10 +15,17 @@ function BindOpener() {
 
 function BindSender() {
     $('#next-chooseTemplate2').click(function () {
-
         var fileUpload = $("#file").get(0);
 
         var files = fileUpload.files;
+
+        for (var i = 0; i < files.length ; i++) {
+            data.append(files[i].name, files[i]);
+        }
+
+        fileUpload = $("#file2").get(0);
+
+        files = fileUpload.files;
 
         for (var i = 0; i < files.length ; i++) {
             data.append(files[i].name, files[i]);
@@ -33,9 +40,12 @@ function BindSender() {
         $.each(postData, function (key, input) {
             data.append(input.name, input.value);
         });
-        data.append("template", "1");
 
-        data.append("Chapter", $("#chapter :selected").text());
+
+        data.append("template", "4");
+        data.append("Chapter", $("#chapterId :selected").text());
+        data.append("OldChapter", $("#oldchapter").val());
+        data.append("OldArticle", $("#oldarticle").val());
 
         $.ajax({
             type: "POST",

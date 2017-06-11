@@ -59,7 +59,7 @@ namespace ESharp.Controllers
         {
             IBaseModel viewModel;
 
-            switch (Request.Form["template"])
+            switch (Request.Form["template"][0])
             {
                 case "1": viewModel = new Template01ViewModel();
                     break;
@@ -72,7 +72,19 @@ namespace ESharp.Controllers
                     viewModel = new Template03ViewModel();
                     break;
 
-                default: viewModel = new Template03ViewModel();
+                case "4":
+                    viewModel = new Template04ViewModel();
+                    break;
+
+                case "5":
+                    viewModel = new Template05ViewModel();
+                    break;
+
+                case "6":
+                    viewModel = new Template06ViewModel();
+                    break;
+
+                default: viewModel = new Template06ViewModel();
                     break;
             }
 
@@ -98,6 +110,11 @@ namespace ESharp.Controllers
             var template = "";
             var wrapper = new StorageManager();
             var model = wrapper.GetArticle(chapter, article, out template);
+            if (template == "1")
+            {
+              // ((Template01ViewModel) model).Description = (((Template01ViewModel)model).Description).Replace("\r\n", Html);
+
+            }
 
             return PartialView($"../Shared/Template{template}/_View", model);
         }
@@ -128,7 +145,7 @@ namespace ESharp.Controllers
 
             var wrapper = new StorageManager();
 
-            if (oldChapter == "")
+            if (oldChapter == "" || oldChapter.IndexOf("undefined") != -1)
             {
                 wrapper.WriteModelToStorage(data, path);
             }
@@ -173,6 +190,7 @@ namespace ESharp.Controllers
             }
 
             var wrapper = new StorageManager();
+            wrapper.RemoveChapterByTitle(model.ChapterSelect);
             wrapper.WriteChapterToStorage(model);
 
             return RedirectToAction("Index", "Admin", new { page = 0 });

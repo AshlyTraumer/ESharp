@@ -1,17 +1,16 @@
 ﻿@using System.Net
-@model ESharp.Models.Template01ViewModel
+@model ESharp.Models.Template04ViewModel
 
 
-<div style="height: 90%;" >
+<div style="height: 90%;">
     <p><h1>@Model.Title</h1></p>
     <hr />
     @if (Model.ImgUrl0 != null)
     {
-        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.ImgUrl0))" style="width: 70%; float: left; padding-right: 3%;" />
+        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.ImgUrl0))" style="width: 90%; float: left; padding-right: 3%;" />
     }
-
-    <div style="padding-right: 3%; margin-top: -15px;">
-        <div id="descr">@Model.Description</div>
-    </div>
+    @if (Model.ImgUrl1 != null)
+    {
+        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.ImgUrl1))" style="width: 90%; float: left; padding-right: 3%;" />
+    }
 </div>
-

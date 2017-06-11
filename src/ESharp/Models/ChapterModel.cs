@@ -8,12 +8,14 @@ namespace ESharp.Models
         public ChapterModel(IFormCollection form)
         {
             Chapter = form["Chapter"];
+            ChapterSelect = form["ChapterSelect"];
         }
 
         public ChapterModel()
         { }
 
         public string Chapter { get; private set; }
+        public string ChapterSelect { get; private set; }
     }
 
     public class LoginModel

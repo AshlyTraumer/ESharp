@@ -112,6 +112,7 @@
             processData: false,
 
             success: function (data) {
+                data = data.replace("&#xD;&#xA;", "<br>");
                 $('#left_content').html(data);
             },
             error: function () {
