@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ESharp.interfaces;
 using Microsoft.AspNetCore.Http;
 
@@ -9,8 +10,7 @@ namespace ESharp.Models
     {
         public Template01Model(IFormCollection form) : base(form)
         {
-            Description = ((string) form["Description"]);
-           // Description = ((string) form["Description"]).Replace("\r\n","<br>");
+            Description = form["Description"].Last();
             ImgUrl0 = form.Files[0];
             TemplateId = 1;
         }
@@ -71,9 +71,7 @@ namespace ESharp.Models
     {
         public Template05Model(IFormCollection form) : base(form)
         {
-            Description = ((string)form["Description"]);
-            // Description = ((string) form["Description"]).Replace("\r\n","<br>");
-            //ImgUrl0 = form.Files[0];
+            Description = form["Description"].Last();
             TemplateId = 5;
         }
 
@@ -87,8 +85,7 @@ namespace ESharp.Models
     {
         public Template06Model(IFormCollection form) : base(form)
         {
-            Description = ((string)form["Description"]);
-            // Description = ((string) form["Description"]).Replace("\r\n","<br>");
+            Description = form["Description"].Last(); 
             TemplateId = 6;
         }
 

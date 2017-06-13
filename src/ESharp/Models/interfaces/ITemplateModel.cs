@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 
 namespace ESharp.interfaces
@@ -12,8 +13,8 @@ namespace ESharp.interfaces
 
         public TemplateModel(IFormCollection form)
         {
-            Chapter = form["Chapter"];
-            Title = form["Title"];
+            Chapter = ((string) form["Chapter"]).Split(',').Last();
+            Title = ((string)form["Title"]).Split(',').Last();
         }
 
         public TemplateModel() { }

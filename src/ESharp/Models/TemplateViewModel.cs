@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 
 namespace ESharp.Models
@@ -21,9 +22,10 @@ namespace ESharp.Models
         public IBaseModel GetPartialModel(IFormCollection requestForm)
         {
             var model = new Template01ViewModel();
-            if (requestForm.ContainsKey("Title")) model.Title = requestForm["Title"];
-            if (requestForm.ContainsKey("Description")) model.Description = requestForm["Description"];
-            if (requestForm.ContainsKey("Chapter")) model.Chapter = requestForm["Chapter"];
+
+            if (requestForm.ContainsKey("Title")) model.Title = requestForm["Title"].Last();
+            if (requestForm.ContainsKey("Description")) model.Description = requestForm["Description"].Last();
+            if (requestForm.ContainsKey("Chapter")) model.Chapter = requestForm["Chapter"].Last();
             return model;
         }
 
@@ -36,7 +38,10 @@ namespace ESharp.Models
 
             if (requestForm.ContainsKey("OldChapter"))
             {
-                wrapper.WriteOldData(requestForm["OldChapter"], requestForm["OldArticle"]);
+                var oldChapter = requestForm["OldChapter"].Last();
+                var oldArticle = requestForm["OldArticle"].Last();
+
+                wrapper.WriteOldData(oldChapter, oldArticle);
             }
             else
             {
@@ -45,7 +50,7 @@ namespace ESharp.Models
 
             Title = model.Title;
             Description = model.Description;
-
+            Chapter = model.Chapter;
 
             using (var binaryReader = new BinaryReader(model.ImgUrl0.OpenReadStream()))
             {
@@ -63,8 +68,8 @@ namespace ESharp.Models
         public IBaseModel GetPartialModel(IFormCollection requestForm)
         {
             var model = new Template02ViewModel();
-            if (requestForm.ContainsKey("Title")) model.Title = requestForm["Title"];
-            if (requestForm.ContainsKey("Chapter")) model.Chapter = requestForm["Chapter"];
+            if (requestForm.ContainsKey("Title")) model.Title = requestForm["Title"].Last();
+            if (requestForm.ContainsKey("Chapter")) model.Chapter = requestForm["Chapter"].Last();
             return model;
         }
 
@@ -77,7 +82,10 @@ namespace ESharp.Models
 
             if (requestForm.ContainsKey("OldChapter"))
             {
-                wrapper.WriteOldData(requestForm["OldChapter"], requestForm["OldArticle"]);
+                var oldChapter = requestForm["OldChapter"].Last();
+                var oldArticle = requestForm["OldArticle"].Last();
+
+                wrapper.WriteOldData(oldChapter, oldArticle);
             }
             else
             {
@@ -85,6 +93,7 @@ namespace ESharp.Models
             }
 
             Title = model.Title;
+            Chapter = model.Chapter;
 
             using (var binaryReader = new BinaryReader(model.ImgUrl0.OpenReadStream()))
             {
@@ -103,8 +112,8 @@ namespace ESharp.Models
         public IBaseModel GetPartialModel(IFormCollection requestForm)
         {
             var model = new Template03ViewModel();
-            if (requestForm.ContainsKey("Title")) model.Title = requestForm["Title"];
-            if (requestForm.ContainsKey("Chapter")) model.Chapter = requestForm["Chapter"];
+            if (requestForm.ContainsKey("Title")) model.Title = requestForm["Title"].Last();
+            if (requestForm.ContainsKey("Chapter")) model.Chapter = requestForm["Chapter"].Last();
             return model;
         }
 
@@ -117,7 +126,10 @@ namespace ESharp.Models
 
             if (requestForm.ContainsKey("OldChapter"))
             {
-                wrapper.WriteOldData(requestForm["OldChapter"], requestForm["OldArticle"]+"_"+requestForm["template"]);
+                var oldChapter = requestForm["OldChapter"].Last();
+                var oldArticle = requestForm["OldArticle"].Last() + "_" + requestForm["template"].Last();
+
+                wrapper.WriteOldData(oldChapter, oldArticle);
             }
             else
             {
@@ -125,6 +137,7 @@ namespace ESharp.Models
             }
 
             Title = model.Title;
+            Chapter = model.Chapter;
 
             using (var binaryReader = new BinaryReader(model.ImgUrl0.OpenReadStream()))
             {
@@ -148,22 +161,24 @@ namespace ESharp.Models
         public IBaseModel GetPartialModel(IFormCollection requestForm)
         {
             var model = new Template04ViewModel();
-            if (requestForm.ContainsKey("Title")) model.Title = requestForm["Title"];
-            if (requestForm.ContainsKey("Chapter")) model.Chapter = requestForm["Chapter"];
+            if (requestForm.ContainsKey("Title")) model.Title = requestForm["Title"].Last();
+            if (requestForm.ContainsKey("Chapter")) model.Chapter = requestForm["Chapter"].Last();
             return model;
         }
 
         public void Bind(IFormCollection requestForm)
         {
-            var model = new Template03Model(requestForm);
+            var model = new Template04Model(requestForm);
 
             var wrapper = new StorageManager();
             wrapper.WriteModelToDat(model);
 
             if (requestForm.ContainsKey("OldChapter"))
             {
-                wrapper.WriteOldData(requestForm["OldChapter"],
-                    requestForm["OldArticle"] + "_" + requestForm["template"]);
+                var oldChapter = requestForm["OldChapter"].Last();
+                var oldArticle = requestForm["OldArticle"].Last() + "_" + requestForm["template"].Last();
+
+                wrapper.WriteOldData(oldChapter, oldArticle);
             }
             else
             {
@@ -171,91 +186,100 @@ namespace ESharp.Models
             }
 
             Title = model.Title;
+            Chapter = model.Chapter;
 
             using (var binaryReader = new BinaryReader(model.ImgUrl0.OpenReadStream()))
             {
-                ImgUrl0 = binaryReader.ReadBytes((int) model.ImgUrl0.Length);
+                ImgUrl0 = binaryReader.ReadBytes((int)model.ImgUrl0.Length);
             }
 
             using (var binaryReader = new BinaryReader(model.ImgUrl1.OpenReadStream()))
             {
-                ImgUrl1 = binaryReader.ReadBytes((int) model.ImgUrl1.Length);
+                ImgUrl1 = binaryReader.ReadBytes((int)model.ImgUrl1.Length);
             }
         }
     }
 
     public class Template05ViewModel : IBaseModel
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Chapter { get; set; }
+
+        public IBaseModel GetPartialModel(IFormCollection requestForm)
         {
-            public string Title { get; set; }
-            public string Description { get; set; }
-            public string Chapter { get; set; }
-
-            public IBaseModel GetPartialModel(IFormCollection requestForm)
-            {
-                var model = new Template05ViewModel();
-                if (requestForm.ContainsKey("Title")) model.Title = requestForm["Title"];
-                if (requestForm.ContainsKey("Description")) model.Description = requestForm["Description"];
-                if (requestForm.ContainsKey("Chapter")) model.Chapter = requestForm["Chapter"];
-                return model;
-            }
-
-            public void Bind(IFormCollection requestForm)
-            {
-                var model = new Template05Model(requestForm);
-
-                var wrapper = new StorageManager();
-                wrapper.WriteModelToDat(model);
-
-                if (requestForm.ContainsKey("OldChapter"))
-                {
-                    wrapper.WriteOldData(requestForm["OldChapter"], requestForm["OldArticle"]);
-                }
-                else
-                {
-                    wrapper.WriteOldData("", "");
-                }
-
-                Title = model.Title;
-                Description = model.Description;
-            }
+            var model = new Template05ViewModel();
+            if (requestForm.ContainsKey("Title")) model.Title = requestForm["Title"].Last();
+            if (requestForm.ContainsKey("Description")) model.Description = requestForm["Description"].Last();
+            if (requestForm.ContainsKey("Chapter")) model.Chapter = requestForm["Chapter"].Last();
+            return model;
         }
 
-        public class Template06ViewModel : IBaseModel
+        public void Bind(IFormCollection requestForm)
         {
-            public string Title { get; set; }
-            public string Description { get; set; }
-            public string Chapter { get; set; }
+            var model = new Template05Model(requestForm);
 
-            public IBaseModel GetPartialModel(IFormCollection requestForm)
+            var wrapper = new StorageManager();
+            wrapper.WriteModelToDat(model);
+
+            if (requestForm.ContainsKey("OldChapter"))
             {
-                var model = new Template06ViewModel();
-                if (requestForm.ContainsKey("Title")) model.Title = requestForm["Title"];
-                if (requestForm.ContainsKey("Description")) model.Description = requestForm["Description"];
-                if (requestForm.ContainsKey("Chapter")) model.Chapter = requestForm["Chapter"];
-                return model;
+                var oldChapter = requestForm["OldChapter"].Last();
+                var oldArticle = requestForm["OldArticle"].Last() + "_" + requestForm["template"].Last();
+
+                wrapper.WriteOldData(oldChapter, oldArticle);
+            }
+            else
+            {
+                wrapper.WriteOldData("", "");
             }
 
-            public void Bind(IFormCollection requestForm)
-            {
-                var model = new Template05Model(requestForm);
+            Title = model.Title;
+            Description = model.Description;
+            Chapter = model.Chapter;
+        }
+    }
 
-                var wrapper = new StorageManager();
-                wrapper.WriteModelToDat(model);
+    public class Template06ViewModel : IBaseModel
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Chapter { get; set; }
 
-                if (requestForm.ContainsKey("OldChapter"))
-                {
-                    wrapper.WriteOldData(requestForm["OldChapter"], requestForm["OldArticle"]);
-                }
-                else
-                {
-                    wrapper.WriteOldData("", "");
-                }
-
-                Title = model.Title;
-                Description = model.Description;
-
-            }
+        public IBaseModel GetPartialModel(IFormCollection requestForm)
+        {
+            var model = new Template06ViewModel();
+            if (requestForm.ContainsKey("Title")) model.Title = requestForm["Title"].Last();
+            if (requestForm.ContainsKey("Description")) model.Description = requestForm["Description"].Last();
+            if (requestForm.ContainsKey("Chapter")) model.Chapter = requestForm["Chapter"].Last();
+            return model;
         }
 
-    
+        public void Bind(IFormCollection requestForm)
+        {
+            var model = new Template06Model(requestForm);
+
+            var wrapper = new StorageManager();
+            wrapper.WriteModelToDat(model);
+
+            if (requestForm.ContainsKey("OldChapter"))
+            {
+                var oldChapter = requestForm["OldChapter"].Last();
+                var oldArticle = requestForm["OldArticle"].Last()+ "_" + requestForm["template"].Last();
+
+                wrapper.WriteOldData(oldChapter, oldArticle);
+            }
+            else
+            {
+                wrapper.WriteOldData("", "");
+            }
+
+            Title = model.Title;
+            Description = model.Description;
+            Chapter = model.Chapter;
+
+        }
+    }
+
+
 }

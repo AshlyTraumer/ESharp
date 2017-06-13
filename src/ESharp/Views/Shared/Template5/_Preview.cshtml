@@ -10,9 +10,10 @@
     <div style="padding-right: 3%; margin-top: -15px;">
         <div id="descr"><code>@Model.Description</code></div>
     </div>
+    <button type="submit" class="btn btn-primary" id="back-choosePreview" style="margin-bottom: 0;">Назад</button>
+    <button type="submit" class="btn btn-primary pull-right" id="next-choosePreview">Далее</button>
+
 </div>
-<button type="submit" class="btn btn-primary" id="back-choosePreview" style="margin-bottom: 0;">Назад</button>
-<button type="submit" class="btn btn-primary pull-right" id="next-choosePreview">Далее</button>
 
 
 <script>
@@ -34,7 +35,7 @@
                 dataType: 'html'
             });
 
-            $('#dialogPreview').dialog('close');
+            $('#dialogPreview5').dialog('close');
             $('#dialog').dialog('close');
             $('#dialogChangeArticle').dialog('close');
             alert("Статья добавлена успешно");

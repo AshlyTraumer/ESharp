@@ -110,11 +110,39 @@ namespace ESharp
             {
                 fi.Delete();
             }
-
             Directory.Delete(path);
 
             var list = GetChapterList();
             list.Remove(stringValues);
+
+            path = $"{Directory.GetCurrentDirectory()}\\Articles\\Chapters.txt";
+            File.Delete(path);
+
+            using (var writer = File.AppendText(path))
+            {
+                foreach (var listItem in list)
+                {
+                    writer.WriteLine(listItem);
+                }
+            }
+        }
+
+        public void MoveChapterByTitle(StringValues stringValues, string newChapter)
+        {
+            var path = $"{Directory.GetCurrentDirectory()}\\Articles\\{stringValues}";
+            var path2 = $"{Directory.GetCurrentDirectory()}\\Articles\\{newChapter}";
+            
+            Directory.Move(path,path2);
+
+            var list = GetChapterList();
+            for (int i =0; i<list.Count; i++)
+            {
+                if (list[i] == stringValues)
+                {
+                    list[i] = newChapter;
+                    break;
+                }
+            }
 
             path = $"{Directory.GetCurrentDirectory()}\\Articles\\Chapters.txt";
             File.Delete(path);
@@ -157,7 +185,7 @@ namespace ESharp
             return path;
         }
 
-        public void WriteOldData(StringValues stringValues, StringValues stringValues1)
+        public void WriteOldData(string stringValues, string stringValues1)
         {
             var serializer = new Serializer();
             serializer.SerializeOldChapter(stringValues);

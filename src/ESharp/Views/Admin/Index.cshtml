@@ -75,8 +75,8 @@
 <div id="dialogDeleteChapter" hidden title="Удаление раздела">
     <form method="post" enctype="multipart/form-data" action="@Url.Action("DeleteChapter","Admin")">
         <div class="form-inline">
-            <label class="control-label">Выберите раздел:</label>
-            <select class="form-control" style="width: 74%; margin-left: 2%" name="Chapter" id="chapter">
+            <label class="control-label">Выберите раздел:<br></label>
+            <select class="form-control" style="width: 58%; margin-left: 2%" name="Chapter" id="chapter">
                 @foreach (var chapter in Model.AdminItems)
                 {
                     <option value="@chapter.Chapter">@chapter.Chapter</option>
@@ -90,7 +90,7 @@
     <form method="post" enctype="multipart/form-data" action="@Url.Action("ChangeChapter","Admin")">
         <div class="form-inline">
             <label class="control-label">Выберите раздел:</label>
-            <select class="form-control" style="width: 74%; margin-left: 2%" name="ChapterSelect" id="chapterSelect">
+            <select class="form-control" style="width: 58%; margin-left: 2%" name="ChapterSelect" id="chapterSelect">
                 <option value="-1"></option>
                 @foreach (var chapter in Model.AdminItems)
             {
@@ -102,7 +102,7 @@
         <div class="form-inline">
 
             <label class="control-label">Название раздела:</label>
-            <input type="text" id="chapterEdit" name="Chapter" style="width:74%; margin-left: 30px" class="form-control" required="required" minlength="2" maxlength="30">
+            <input type="text" id="chapterEdit" name="Chapter" style="width:58%; margin-left: 30px" class="form-control" required="required" minlength="2" maxlength="30">
             <span class="glyphicon form-control-feedback"></span>
 
 
@@ -116,8 +116,8 @@
 
         $('#dialogDeleteChapter').dialog({
             autoOpen: false,
-            width: 1000,
-            height: 200,
+            width: 650,
+            height: 120,
             show: {
                 effect: "blind",
                 duration: 1000
@@ -130,8 +130,8 @@
 
         $('#dialogChangeChapte').dialog({
             autoOpen: false,
-            width: 1000,
-            height: 220,
+            width: 700,
+            height: 180,
             show: {
                 effect: "blind",
                 duration: 1000
@@ -145,7 +145,7 @@
         $('#dialogChangeArticle').dialog({
             autoOpen: false,
             width: 1200,
-            height: 550,
+            height: 480,
             show: {
                 effect: "blind",
                 duration: 1000

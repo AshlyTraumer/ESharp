@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ESharp.Models;
 using ESharp.wwwroot.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -59,7 +60,7 @@ namespace ESharp.Controllers
         {
             IBaseModel viewModel;
 
-            switch (Request.Form["template"][0])
+            switch (Request.Form["template"].Last())
             {
                 case "1": viewModel = new Template01ViewModel();
                     break;
@@ -101,8 +102,7 @@ namespace ESharp.Controllers
 
                 return PartialView($"../Shared/Template{Request.Form["template"]}/_Form", viewModel.GetPartialModel(Request.Form));
             }
-
-            return PartialView($"../Shared/Template{Request.Form["template"]}/_Preview", viewModel);
+            return PartialView($"../Shared/Template{Request.Form["template"].Last()}/_Preview", viewModel);
         }
 
         public ActionResult GetArticlePartial(int article = 0, int chapter = 0)
@@ -190,8 +190,7 @@ namespace ESharp.Controllers
             }
 
             var wrapper = new StorageManager();
-            wrapper.RemoveChapterByTitle(model.ChapterSelect);
-            wrapper.WriteChapterToStorage(model);
+            wrapper.MoveChapterByTitle(model.ChapterSelect, model.Chapter);
 
             return RedirectToAction("Index", "Admin", new { page = 0 });
         }

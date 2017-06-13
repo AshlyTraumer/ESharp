@@ -16,10 +16,10 @@
     {
         <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.ImgUrl1))" style="max-width: 90%; float: left; padding-right: 3%;" />
     }
+    <button type="submit" class="btn btn-primary" id="back-choosePreview" style="margin-bottom: 0;">Назад</button>
+    <button type="submit" class="btn btn-primary pull-right" id="next-choosePreview">Далее</button>
 
 </div>
-<button type="submit" class="btn btn-primary" id="back-choosePreview" style="margin-bottom: 0;">Назад</button>
-<button type="submit" class="btn btn-primary pull-right" id="next-choosePreview">Далее</button>
 
 
 <script>
@@ -41,7 +41,7 @@
                 dataType: 'html'
             });
 
-            $('#dialogPreview').dialog('close');
+            $('#dialogPreview4').dialog('close');
             $('#dialog').dialog('close');
             $('#dialogChangeArticle').dialog('close');
             alert("Статья добавлена успешно");
