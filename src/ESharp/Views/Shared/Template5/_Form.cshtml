@@ -67,6 +67,7 @@
 <script>
     var data = new FormData();
     $(window).ready(function () {
-
+        data.append("OldArticle", $('#oldarticle').val());
+        data.append("OldChapter", $('#oldchapter').val());
     });
 </script>
