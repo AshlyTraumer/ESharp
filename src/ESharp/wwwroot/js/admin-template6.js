@@ -13,6 +13,10 @@ function BindOpener() {
     });
 }
 
+String.prototype.replaceAll = function (search, replace) {
+    return this.split(search).join(replace);
+}
+
 function BindSender() {
     $('#next-chooseTemplate2').click(function () {
 
@@ -45,6 +49,13 @@ function BindSender() {
                 }
                 else {
                     $('#dialogChoose').dialog('open');
+                    data = data.replaceAll("&#xD;&#xA;", "<br>");
+                    data = data.replaceAll("&lt;b&gt;", "<b>");
+                    data = data.replaceAll("&lt;/b&gt;", "</b>");
+                    data = data.replaceAll("&lt;i&gt;", "<i>");
+                    data = data.replaceAll("&lt;/i&gt;", "</i>");
+                    data = data.replaceAll("&#xD;", "<br>");
+                    data = data.replaceAll("&#xA;", "<br>");
                     $('#dialogChoose').html(data);
                 }
             },

@@ -39,13 +39,13 @@
                     if (Model.CurrentPage == i)
                     {
                         <h4 style="z-index: 100000; background-color: #0a0429; border: none; color: white" aria-selected="true">
-                            <a href="#" id="customActive" style="background-color: #0a0429">@item.Chapter</a>
+                            <a href="#" id="customActive" style="background-color: #0a0429; color:white">@item.Chapter</a>
                         </h4>
                     }
                     else
                     {
                         <h4 style="z-index: 100000; background-color: #0a0429; border: none; color: white" aria-selected="false">
-                            <a href="#" style="background-color: #0a0429">@item.Chapter</a>
+                            <a href="#" style="background-color: #0a0429; color:white">@item.Chapter</a>
                         </h4>
                     }
                     <div style="padding: 0px">
@@ -103,6 +103,9 @@
     </form>
 </div>
 <script>
+    String.prototype.replaceAll = function(search, replace){
+        return this.split(search).join(replace);
+    }
 
     function BindSender(i, j) {
         $.ajax({
@@ -112,14 +115,22 @@
             processData: false,
 
             success: function (data) {
-                data = data.replace("&#xD;&#xA;", "<br>");
-                data = data.replace("&#xA;", "<br>");
-                $('#left_content').html(data);
+              //  alert(data);
+                data = data.replaceAll("&#xD;&#xA;", "<br>");
+                data = data.replaceAll("&lt;b&gt;", "<b>");
+                data = data.replaceAll("&lt;/b&gt;", "</b>");
+                data = data.replaceAll("&lt;i&gt;", "<i>");
+                data = data.replaceAll("&lt;/i&gt;", "</i>");
+                data = data.replaceAll("&#xD;", "<br>");
+                data = data.replaceAll("&#xA;", "<br>");
+                $('#left_content').html(data); //&#xD;&#xA
             },
             error: function () {
                 alert("There was error uploading files!");
             }
         });
+
+       
 
         $.ajax({
             type: "Get",
@@ -143,6 +154,12 @@
             processData: false,
 
             success: function (data) {
+                data = data.replaceAll("&#xD;&#xA;", "<br>");
+                data = data.replaceAll("&lt;b&gt;", "<b>");
+                data = data.replaceAll("&lt;/b&gt;", "</b>");
+                data = data.replaceAll("&lt;i&gt;", "<i>");
+                data = data.replaceAll("&lt;/i&gt;", "</i>");
+                data = data.replaceAll("&#xD;", "<br>");
                 $('#left_content').html(data);
             },
             error: function () {
